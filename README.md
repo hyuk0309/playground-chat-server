@@ -13,3 +13,9 @@ Spring, Kotlin, WebSocket
 
 - Official Docs
   - Spring Docs : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html 
+
+
+## 개념
+
+### WebSocketSession
+Client들은 Server에 접속하면 개별의 WebSocketSession을 갖는다.
