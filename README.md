@@ -19,3 +19,8 @@ Spring, Kotlin, WebSocket
 
 ### WebSocketSession
 Client들은 Server에 접속하면 개별의 WebSocketSession을 갖는다.
+
+### Issue
+- FreeMarkerViewReolver's default suffix
+  - dafult suffix : .htlh
+    - ref : https://github.com/spring-projects/spring-boot/issues/15131

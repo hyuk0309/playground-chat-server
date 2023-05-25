@@ -1,25 +1,25 @@
 package elvis.chat.playgroundchatserver.controller
 
-import elvis.chat.playgroundchatserver.model.ChatRoom
-import elvis.chat.playgroundchatserver.service.ChatService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import elvis.chat.playgroundchatserver.model.ChatMessage
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.messaging.simp.SimpMessageSendingOperations
+import org.springframework.stereotype.Controller
 
-@RestController
-@RequestMapping("/chat")
+@Controller
 class ChatController(
-    private val chatService: ChatService
+    private val messagingTemplate: SimpMessageSendingOperations,
 ) {
-    @PostMapping
-    fun createRoom(@RequestParam name: String): ChatRoom {
-        return chatService.createRoom(name)
-    }
-
-    @GetMapping
-    fun findAllRoom(): List<ChatRoom> {
-        return chatService.findAllRoom()
+    @MessageMapping("/chat/message")
+    fun message(message: ChatMessage) {
+        when (message.type) {
+            ChatMessage.MessageType.ENTER -> {
+                val enterMessage =
+                    ChatMessage(message.type, message.roomId, message.sender, "${message.sender}님이 입장했습니다.")
+                messagingTemplate.convertAndSend("/sub/chat/room/${enterMessage.roomId}", enterMessage)
+            }
+            ChatMessage.MessageType.TALK -> {
+                messagingTemplate.convertAndSend("/sub/chat/room/${message.roomId}", message)
+            }
+        }
     }
 }

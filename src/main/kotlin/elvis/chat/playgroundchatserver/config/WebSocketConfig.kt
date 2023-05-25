@@ -1,17 +1,21 @@
 package elvis.chat.playgroundchatserver.config
 
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.socket.WebSocketHandler
-import org.springframework.web.socket.config.annotation.EnableWebSocket
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
+import org.springframework.messaging.simp.config.MessageBrokerRegistry
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer
 
 @Configuration
-@EnableWebSocket
-class WebSocketConfig(
-    private val webSocketHandler: WebSocketHandler
-): WebSocketConfigurer {
-    override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*")
+@EnableWebSocketMessageBroker
+class WebSocketConfig: WebSocketMessageBrokerConfigurer {
+    override fun configureMessageBroker(config: MessageBrokerRegistry) {
+        config.enableSimpleBroker("/sub")
+        config.setApplicationDestinationPrefixes("/pub")
+    }
+
+    override fun registerStompEndpoints(registry: StompEndpointRegistry) {
+        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*")
+            .withSockJS()
     }
 }
