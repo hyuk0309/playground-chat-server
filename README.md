@@ -22,5 +22,9 @@ Client들은 Server에 접속하면 개별의 WebSocketSession을 갖는다.
 
 ### Issue
 - FreeMarkerViewReolver's default suffix
-  - dafult suffix : .htlh
+  - Reason : dafult suffix : .htlh
     - ref : https://github.com/spring-projects/spring-boot/issues/15131
+  - Solution : change `ftl` extension to `ftlh`
+- Can't find Webjar Dependency
+  - Solution : add Resource Handler
+    - ref : https://www.baeldung.com/maven-webjars
