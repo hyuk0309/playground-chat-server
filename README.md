@@ -15,12 +15,16 @@ Spring, Kotlin, WebSocket
   - Spring Docs : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html 
 
 
-## 개념
+## Learned Concept
 
-### WebSocketSession
-Client들은 Server에 접속하면 개별의 WebSocketSession을 갖는다.
+- WebSocket Protocol & Spring Support
+  - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26-,.%C2%A0WebSocket%20Support,-This%20part%20of
 
-### Issue
+- STOMP & Spring Support
+  - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26.4-,STOMP,-The%20WebSocket%20protocol
+  
+
+## Issue
 - FreeMarkerViewReolver's default suffix
   - Reason : dafult suffix : .htlh
     - ref : https://github.com/spring-projects/spring-boot/issues/15131
