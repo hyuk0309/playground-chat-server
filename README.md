@@ -32,3 +32,11 @@ Spring, Kotlin, WebSocket
 - Can't find Webjar Dependency
   - Solution : add Resource Handler
     - ref : https://www.baeldung.com/maven-webjars
+- SLF4J multi binding Issue
+  - Reason : SLF4J will bind with one logging framework at a time. but my classpath have two binder(provider)
+    - ref : https://www.baeldung.com/slf4j-classpath-multiple-bindings
+  - Solution : exclude one logging framework using gradle.
+    - ref : 
+      - Listing dependency tree : https://docs.gradle.org/7.3/userguide/viewing_debugging_dependencies.html#sec:listing_dependencies
+      - exclude specific module : https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#sec:excluding-transitive-deps
+        - how to know group and module name : https://stackoverflow.com/questions/43582247/how-to-know-if-duplicate-library-is-module-or-group
