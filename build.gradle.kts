@@ -19,11 +19,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-devtools")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.google.code.gson:gson:2.8.0")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+    implementation("it.ozimov:embedded-redis:0.7.3") {
+        exclude(group = "org.slf4j", module = "slf4j-simple")
+    }
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

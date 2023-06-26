@@ -1,11 +1,16 @@
 spring:
+  profiles:
+    active: local
+
   devtools:
     livereload:
       enabled: true
     restart:
       enabled: false
+
   freemarker:
     cache: false
-logging:
-  level:
-    root: info
+
+#logging:
+#  level:
+#    root: debug

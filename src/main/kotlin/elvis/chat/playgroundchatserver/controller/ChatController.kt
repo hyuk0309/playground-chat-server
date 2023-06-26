@@ -1,25 +1,26 @@
 package elvis.chat.playgroundchatserver.controller
 
 import elvis.chat.playgroundchatserver.model.ChatMessage
+import elvis.chat.playgroundchatserver.pubsub.RedisPublisher
+import elvis.chat.playgroundchatserver.repo.ChatRoomRepository
 import org.springframework.messaging.handler.annotation.MessageMapping
-import org.springframework.messaging.simp.SimpMessageSendingOperations
 import org.springframework.stereotype.Controller
 
 @Controller
 class ChatController(
-    private val messagingTemplate: SimpMessageSendingOperations,
+    private val redisPublisher: RedisPublisher,
+    private val chatRoomRepository: ChatRoomRepository,
 ) {
     @MessageMapping("/chat/message")
     fun message(message: ChatMessage) {
-        when (message.type) {
-            ChatMessage.MessageType.ENTER -> {
-                val enterMessage =
-                    ChatMessage(message.type, message.roomId, message.sender, "${message.sender}님이 입장했습니다.")
-                messagingTemplate.convertAndSend("/sub/chat/room/${enterMessage.roomId}", enterMessage)
-            }
-            ChatMessage.MessageType.TALK -> {
-                messagingTemplate.convertAndSend("/sub/chat/room/${message.roomId}", message)
-            }
+        if (ChatMessage.MessageType.ENTER == message.type) {
+            chatRoomRepository.enterChatRoom(message.roomId)
+            redisPublisher.publish(
+                chatRoomRepository.getTopic(message.roomId),
+                ChatMessage(message.type, message.roomId, message.sender, "${message.sender}님이 입장하셨습니다.")
+            )
+            return
         }
+        redisPublisher.publish(chatRoomRepository.getTopic(message.roomId), message)
     }
 }
