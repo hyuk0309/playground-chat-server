@@ -23,6 +23,12 @@ Spring, Kotlin, WebSocket
 - STOMP & Spring Support
   - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26.4-,STOMP,-The%20WebSocket%20protocol
   
+- spring data redis pub sub
+  - ref
+    - redis docs : https://redis.io/docs/manual/pubsub/
+    - spring docs : https://spring.io/guides/gs/messaging-redis/
+    - blog : https://www.baeldung.com/spring-data-redis-pub-sub
+    - blog : https://brunch.co.kr/@springboot/374
 
 ## Issue
 - FreeMarkerViewReolver's default suffix
