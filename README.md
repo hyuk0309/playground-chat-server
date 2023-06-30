@@ -46,3 +46,5 @@ Spring, Kotlin, WebSocket
       - Listing dependency tree : https://docs.gradle.org/7.3/userguide/viewing_debugging_dependencies.html#sec:listing_dependencies
       - exclude specific module : https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#sec:excluding-transitive-deps
         - how to know group and module name : https://stackoverflow.com/questions/43582247/how-to-know-if-duplicate-library-is-module-or-group
+- Spring Securit's WebSecurityConfigurerAdapter was deprecated
+  - ref : https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
