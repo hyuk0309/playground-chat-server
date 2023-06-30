@@ -20,6 +20,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+
     implementation("org.springframework.boot:spring-boot-devtools")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -28,6 +31,7 @@ dependencies {
     implementation("it.ozimov:embedded-redis:0.7.3") {
         exclude(group = "org.slf4j", module = "slf4j-simple")
     }
+    implementation("io.jsonwebtoken:jjwt-gson:0.11.5")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
