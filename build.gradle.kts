@@ -31,7 +31,9 @@ dependencies {
     implementation("it.ozimov:embedded-redis:0.7.3") {
         exclude(group = "org.slf4j", module = "slf4j-simple")
     }
-    implementation("io.jsonwebtoken:jjwt-gson:0.11.5")
+    api("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.5")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

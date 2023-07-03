@@ -1,6 +1,9 @@
 package elvis.chat.playgroundchatserver.controller
 
+import elvis.chat.playgroundchatserver.model.LoginInfo
 import elvis.chat.playgroundchatserver.repo.ChatRoomRepository
+import elvis.chat.playgroundchatserver.service.JwtTokenProvider
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 @Controller
 @RequestMapping("/chat")
 class ChatRoomController(
+    private val jwtTokenProvider: JwtTokenProvider,
     private val chatRoomRepository: ChatRoomRepository,
 ) {
     @GetMapping("/room")
@@ -35,4 +39,12 @@ class ChatRoomController(
     @GetMapping("/room/{roomId}")
     @ResponseBody
     fun roomInfo(@PathVariable roomId: String) = chatRoomRepository.findRoomById(roomId)
+
+    @GetMapping("/user")
+    @ResponseBody
+    fun getUserInfo(): LoginInfo {
+        val auth = SecurityContextHolder.getContext().authentication
+        val name = auth.name
+        return LoginInfo(name, jwtTokenProvider.generateToken(name))
+    }
 }

@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: local
+  jwt:
+    secret: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
   devtools:
     livereload:
