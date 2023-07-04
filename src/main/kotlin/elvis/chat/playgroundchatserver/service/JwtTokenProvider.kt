@@ -1,12 +1,7 @@
 package elvis.chat.playgroundchatserver.service
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.Jws
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.MalformedJwtException
-import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.UnsupportedJwtException
+import io.jsonwebtoken.*
+import io.jsonwebtoken.security.Keys
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -28,7 +23,7 @@ class JwtTokenProvider {
             .setId(name)
             .setIssuedAt(now)
             .setExpiration(Date(now.time + TOKEN_VALID_MILISECOND))
-            .signWith(SignatureAlgorithm.HS256, secreteKey)
+            .signWith(Keys.hmacShaKeyFor(secreteKey.toByteArray()))
             .compact()
     }
 
@@ -42,7 +37,10 @@ class JwtTokenProvider {
 
     private fun getClaims(jwt: String?): Jws<Claims>? {
         try {
-            return Jwts.parser().setSigningKey(secreteKey).parseClaimsJws(jwt)
+            return Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(secreteKey.toByteArray()))
+                .build()
+                .parseClaimsJws(jwt)
         } catch (ex: SignatureException) {
             log.error { "Invalid JWT signature" }
             throw ex
