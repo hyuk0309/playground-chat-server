@@ -48,3 +48,6 @@ Spring, Kotlin, WebSocket
         - how to know group and module name : https://stackoverflow.com/questions/43582247/how-to-know-if-duplicate-library-is-module-or-group
 - Spring Securit's WebSecurityConfigurerAdapter was deprecated
   - ref : https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
+- JJWT(jsonwebtoken) deprecated api
+  - Reason : confused api
+  - ref : https://stackoverflow.com/questions/40252903/static-secret-as-byte-key-or-string/40274325#40274325
