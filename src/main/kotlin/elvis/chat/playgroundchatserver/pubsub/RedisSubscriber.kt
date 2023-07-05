@@ -12,22 +12,19 @@ import org.springframework.stereotype.Service
 @Service
 class RedisSubscriber(
     private val objectMapper: ObjectMapper,
-    private val redisTemplate: RedisTemplate<String, Any>,
     private val messagingTemplate: SimpMessageSendingOperations,
-) : MessageListener {
-
+) {
     private val log = KotlinLogging.logger { }
 
     /**
      * handle message when a message is published in redis
      */
-    override fun onMessage(message: Message, pattern: ByteArray?) {
+    fun sendMessage(publishMessage: String) {
         try {
-            val publishedMessage = redisTemplate.stringSerializer.deserialize(message.body) as String
-            val roomMessage = objectMapper.readValue(publishedMessage, ChatMessage::class.java)
-            messagingTemplate.convertAndSend("/sub/chat/room/${roomMessage.roomId}", roomMessage)
+            val chatMessage = objectMapper.readValue(publishMessage, ChatMessage::class.java)
+            messagingTemplate.convertAndSend("/sub/chat/room/${chatMessage.roomId}", chatMessage)
         } catch (e: Exception) {
-            log.error { e.message }
+            log.error { "Exception $e" }
         }
     }
 }

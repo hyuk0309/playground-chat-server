@@ -12,19 +12,12 @@ import org.springframework.stereotype.Repository
 private val CHAT_ROOMS = "CHAT_ROOM"
 
 @Repository
-class ChatRoomRepository(
-    private val redisMessageListener: RedisMessageListenerContainer,
-    private val redisSubscriber: RedisSubscriber,
-    private val redisTemplate: RedisTemplate<String, Any>,
-) {
-
+class ChatRoomRepository(private val redisTemplate: RedisTemplate<String, Any>) {
     private lateinit var opsHashChatRoom: HashOperations<String, String, ChatRoom>
-    private lateinit var topics: MutableMap<String, ChannelTopic>
 
     @PostConstruct
     private fun init() {
         opsHashChatRoom = redisTemplate.opsForHash()
-        topics = HashMap()
     }
 
     fun findAllRoom(): List<ChatRoom> = opsHashChatRoom.values(CHAT_ROOMS)
@@ -36,15 +29,4 @@ class ChatRoomRepository(
         opsHashChatRoom.put(CHAT_ROOMS, newChatRoom.roomId, newChatRoom)
         return newChatRoom
     }
-
-    fun enterChatRoom(roomId: String) {
-        var topic = topics[roomId]
-        if (topic == null) {
-            topic = ChannelTopic(roomId)
-        }
-        redisMessageListener.addMessageListener(redisSubscriber, topic)
-        topics[roomId] = topic
-    }
-
-    fun getTopic(roomId: String): ChannelTopic = topics[roomId]!!
 }
