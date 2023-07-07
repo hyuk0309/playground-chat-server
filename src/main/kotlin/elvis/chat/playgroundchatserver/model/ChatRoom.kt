@@ -10,4 +10,5 @@ class ChatRoom(val name: String) : Serializable {
     }
 
     val roomId = UUID.randomUUID().toString()
+    var userCount = 0L
 }

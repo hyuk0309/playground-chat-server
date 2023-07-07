@@ -1,32 +1,52 @@
 package elvis.chat.playgroundchatserver.repo
 
 import elvis.chat.playgroundchatserver.model.ChatRoom
-import elvis.chat.playgroundchatserver.pubsub.RedisSubscriber
 import jakarta.annotation.PostConstruct
+import jakarta.annotation.Resource
 import org.springframework.data.redis.core.HashOperations
 import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.data.redis.listener.ChannelTopic
-import org.springframework.data.redis.listener.RedisMessageListenerContainer
+import org.springframework.data.redis.core.ValueOperations
 import org.springframework.stereotype.Repository
 
-private val CHAT_ROOMS = "CHAT_ROOM"
+// redis cache keys
+private const val CHAT_ROOMS = "CHAT_ROOM"
+private const val USER_COUNT = "USER_COUNT"
+private const val ENTER_INFO = "ENTER_INFO"
 
 @Repository
-class ChatRoomRepository(private val redisTemplate: RedisTemplate<String, Any>) {
-    private lateinit var opsHashChatRoom: HashOperations<String, String, ChatRoom>
+class ChatRoomRepository {
 
-    @PostConstruct
-    private fun init() {
-        opsHashChatRoom = redisTemplate.opsForHash()
-    }
+    @Resource(name = "redisTemplate")
+    private lateinit var hashOpsChatRoom: HashOperations<String, String, ChatRoom>
 
-    fun findAllRoom(): List<ChatRoom> = opsHashChatRoom.values(CHAT_ROOMS)
+    @Resource(name = "redisTemplate")
+    private lateinit var hashOpsEnterInfo: HashOperations<String, String, String>
 
-    fun findRoomById(id: String): ChatRoom = opsHashChatRoom.get(CHAT_ROOMS, id)!!
+    @Resource(name = "redisTemplate")
+    private lateinit var valueOps: ValueOperations<String, String>
+
+    fun findAllRoom(): List<ChatRoom> = hashOpsChatRoom.values(CHAT_ROOMS)
+
+    fun findRoomById(id: String): ChatRoom = hashOpsChatRoom.get(CHAT_ROOMS, id)!!
 
     fun createChatRoom(name: String): ChatRoom {
         val newChatRoom = ChatRoom(name)
-        opsHashChatRoom.put(CHAT_ROOMS, newChatRoom.roomId, newChatRoom)
+        hashOpsChatRoom.put(CHAT_ROOMS, newChatRoom.roomId, newChatRoom)
         return newChatRoom
+    }
+
+    fun setUserEnterInfo(sessionId: String, roomId: String) = hashOpsEnterInfo.put(ENTER_INFO, sessionId, roomId)
+
+    fun getUserEnterRoomId(sessionId: String) = hashOpsEnterInfo.get(ENTER_INFO, sessionId)
+
+    fun removeUserEnterInfo(sessionId: String) = hashOpsEnterInfo.delete(ENTER_INFO, sessionId)
+
+    fun getUserCount(roomId: String) = (valueOps.get("${USER_COUNT}_${roomId}") ?: "0").toLong()
+
+    fun plusUserCount(roomId: String) = valueOps.increment("${USER_COUNT}_${roomId}") ?: 0L
+
+    fun minusUserCount(roomId: String): Long {
+        val count = valueOps.decrement("${USER_COUNT}_${roomId}") ?: 0L
+        return if (count <= 0) 0 else count
     }
 }

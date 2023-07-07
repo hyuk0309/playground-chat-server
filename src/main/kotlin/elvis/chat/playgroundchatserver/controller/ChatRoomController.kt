@@ -1,5 +1,6 @@
 package elvis.chat.playgroundchatserver.controller
 
+import elvis.chat.playgroundchatserver.model.ChatRoom
 import elvis.chat.playgroundchatserver.model.LoginInfo
 import elvis.chat.playgroundchatserver.repo.ChatRoomRepository
 import elvis.chat.playgroundchatserver.service.JwtTokenProvider
@@ -24,7 +25,11 @@ class ChatRoomController(
 
     @GetMapping("/rooms")
     @ResponseBody
-    fun room() = chatRoomRepository.findAllRoom()
+    fun room(): List<ChatRoom> {
+        val chatRooms = chatRoomRepository.findAllRoom()
+        chatRooms.forEach { room -> room.userCount = chatRoomRepository.getUserCount(room.roomId) }
+        return chatRooms
+    }
 
     @PostMapping("/room")
     @ResponseBody

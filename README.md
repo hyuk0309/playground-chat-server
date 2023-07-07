@@ -51,3 +51,6 @@ Spring, Kotlin, WebSocket
 - JJWT(jsonwebtoken) deprecated api
   - Reason : confused api
   - ref : https://stackoverflow.com/questions/40252903/static-secret-as-byte-key-or-string/40274325#40274325
+
+## To Do
+- Learning `@Resource` principle.
