@@ -30,6 +30,30 @@ Spring, Kotlin, WebSocket
     - blog : https://www.baeldung.com/spring-data-redis-pub-sub
     - blog : https://brunch.co.kr/@springboot/374
 
+- `@Resource` principle
+  - code
+  ``` kotlin
+  @Repository
+  class ChatRoomRepository {
+
+    @Resource(name = "redisTemplate")
+    private lateinit var hashOpsChatRoom: HashOperations<String, String, ChatRoom>
+
+    @Resource(name = "redisTemplate")
+    private lateinit var hashOpsEnterInfo: HashOperations<String, String, String>
+
+    @Resource(name = "redisTemplate")
+    private lateinit var valueOps: ValueOperations<String, String>
+    ...
+  }
+  ``` 
+  - Question? : How Spring Inject Dependency when `name` bean and target bean are different.
+    - Answer : there is converter helping that task.
+      - ref
+        - logic start : org.springframework.beans.factory.support.AbstractBeanFactory.adaptBeanInstance
+        - key class : org.springframework.data.redis.core.HashOperationsEditor
+
+
 ## Issue
 - FreeMarkerViewReolver's default suffix
   - Reason : dafult suffix : .htlh
