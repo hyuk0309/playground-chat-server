@@ -49,9 +49,11 @@ java -jar playground-chat-server-0.0.1-SNAPSHOT.jar
 
 - WebSocket Protocol & Spring Support
   - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26-,.%C2%A0WebSocket%20Support,-This%20part%20of
+  - my blog : https://hyuk0309.tistory.com/19
 
 - STOMP & Spring Support
   - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26.4-,STOMP,-The%20WebSocket%20protocol
+  - my blog : https://hyuk0309.tistory.com/20
 
 - spring data redis pub sub
   - ref
@@ -59,6 +61,7 @@ java -jar playground-chat-server-0.0.1-SNAPSHOT.jar
     - spring docs : https://spring.io/guides/gs/messaging-redis/
     - blog : https://www.baeldung.com/spring-data-redis-pub-sub
     - blog : https://brunch.co.kr/@springboot/374
+  - my blog : https://hyuk0309.tistory.com/21
 
 - `@Resource` principle
   - code
