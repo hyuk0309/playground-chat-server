@@ -23,6 +23,12 @@ class ChatRoomController(
     @GetMapping("/room")
     fun rooms(model: Model) = "/chat/room"
 
+    @GetMapping("/room/enter/{roomId}")
+    fun roomDetail(model: Model, @PathVariable roomId: String): String {
+        model.addAttribute("roomId", roomId)
+        return "/chat/roomdetail"
+    }
+
     @GetMapping("/rooms")
     @ResponseBody
     fun room(): List<ChatRoom> {
@@ -34,12 +40,6 @@ class ChatRoomController(
     @PostMapping("/room")
     @ResponseBody
     fun createRoom(@RequestParam name: String) = chatRoomRepository.createChatRoom(name)
-
-    @GetMapping("/room/enter/{roomId}")
-    fun roomDetail(model: Model, @PathVariable roomId: String): String {
-        model.addAttribute("roomId", roomId)
-        return "/chat/roomdetail"
-    }
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
