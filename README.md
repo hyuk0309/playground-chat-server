@@ -1,28 +1,58 @@
 # playground-chat-server
 
-## Develop simple chat server
+## Intro & Motivation
+This service is simple chatting server using websocket protocol.
+The reason why I develop this service is to learn websocket concept.
 
 ## Tech
 
-Spring, Kotlin, WebSocket
+### Server
+Kotlin, Spring(MVC, Websocket, Redis, Security, Freemarker), JJWT ..
 
-## Ref
-- Example Code
-  - Blog : https://www.daddyprogrammer.org/post/4077/spring-websocket-chatting/
-  - Bolg : https://velog.io/@dvmflstm/Spring-Webflux-Kotlin-Coroutine-Actor%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-Websocket-Server-%EB%A7%8C%EB%93%A4%EA%B8%B0 
+### Front
+Vue
 
-- Official Docs
-  - Spring Docs : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html 
+If you want to know more information about my project's tech referencing [gradle file](build.gradle.kts)
 
+## Architecture
 
-## Learned Concept
+[To Do]
+
+## Feature
+
+### HTTP
+- `/chat/rooms` : Get all chat-room information
+- `/chat/room/{roomId}` : Get specified chat-room information
+- `/chat/room?name="chatRoomName` : create new chat-room
+- `/chat/user` : get current user info
+
+### STOMP(Websocket)
+- `/ws-stomp` : connect stomp
+- `/sub/chat/room/{roomId}` : subscribe roomId topic
+- `/pub/chat/message` : publish message to specific topic (message include topic information)
+
+## Get Start (local environment)
+``` shell
+# clone project and move to project folder
+git clone https://github.com/hyuk0309/playground-chat-server.git
+cd ./playground-chat-server/
+
+# build and execute project
+./gradlew clean build
+cd ./build.libs
+java -jar playground-chat-server-0.0.1-SNAPSHOT.jar
+```
+
+## What I Learn
+
+### Learned Concept
 
 - WebSocket Protocol & Spring Support
   - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26-,.%C2%A0WebSocket%20Support,-This%20part%20of
 
 - STOMP & Spring Support
   - ref : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html#:~:text=26.4-,STOMP,-The%20WebSocket%20protocol
-  
+
 - spring data redis pub sub
   - ref
     - redis docs : https://redis.io/docs/manual/pubsub/
@@ -54,7 +84,7 @@ Spring, Kotlin, WebSocket
         - key class : org.springframework.data.redis.core.HashOperationsEditor
 
 
-## Issue
+### Issue
 - FreeMarkerViewReolver's default suffix
   - Reason : dafult suffix : .htlh
     - ref : https://github.com/spring-projects/spring-boot/issues/15131
@@ -66,7 +96,7 @@ Spring, Kotlin, WebSocket
   - Reason : SLF4J will bind with one logging framework at a time. but my classpath have two binder(provider)
     - ref : https://www.baeldung.com/slf4j-classpath-multiple-bindings
   - Solution : exclude one logging framework using gradle.
-    - ref : 
+    - ref :
       - Listing dependency tree : https://docs.gradle.org/7.3/userguide/viewing_debugging_dependencies.html#sec:listing_dependencies
       - exclude specific module : https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#sec:excluding-transitive-deps
         - how to know group and module name : https://stackoverflow.com/questions/43582247/how-to-know-if-duplicate-library-is-module-or-group
@@ -75,6 +105,12 @@ Spring, Kotlin, WebSocket
 - JJWT(jsonwebtoken) deprecated api
   - Reason : confused api
   - ref : https://stackoverflow.com/questions/40252903/static-secret-as-byte-key-or-string/40274325#40274325
+  
+## Reference
+- Example Code
+  - Blog : https://www.daddyprogrammer.org/post/4077/spring-websocket-chatting/
+  - Bolg : https://velog.io/@dvmflstm/Spring-Webflux-Kotlin-Coroutine-Actor%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-Websocket-Server-%EB%A7%8C%EB%93%A4%EA%B8%B0 
 
-## To Do
-- Learning `@Resource` principle.
+- Official Docs
+  - Spring Docs : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html 
+  
