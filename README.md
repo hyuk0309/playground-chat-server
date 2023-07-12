@@ -16,7 +16,7 @@ If you want to know more information about my project's tech referencing [gradle
 
 ## Architecture
 
-[To Do]
+![architecture](image/architecture.png)
 
 ## Feature
 
