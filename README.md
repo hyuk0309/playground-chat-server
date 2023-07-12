@@ -116,4 +116,6 @@ java -jar playground-chat-server-0.0.1-SNAPSHOT.jar
 
 - Official Docs
   - Spring Docs : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html 
-  
+
+## To Do
+- Deep Dive ServletWebServerApplicationContext
