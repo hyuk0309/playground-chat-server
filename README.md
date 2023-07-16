@@ -108,6 +108,8 @@ java -jar playground-chat-server-0.0.1-SNAPSHOT.jar
 - JJWT(jsonwebtoken) deprecated api
   - Reason : confused api
   - ref : https://stackoverflow.com/questions/40252903/static-secret-as-byte-key-or-string/40274325#40274325
+- The difference between the Spring Container in an operational environment and the Spring Container in a testing environment
+  - reason : When testing, If we use `WebEnvironment.MOCK`, than SpringBootContextLoader load `GenericWebApplicationContext`. But, If we use `WebEnvironment.RANDOM_PORT` or `WebEnvironment.DEFINED_PORT`, than load `AnnotationConfigServletWebServerApplicationContext`.  
   
 ## Reference
 - Example Code
@@ -117,5 +119,5 @@ java -jar playground-chat-server-0.0.1-SNAPSHOT.jar
 - Official Docs
   - Spring Docs : https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/websocket.html 
 
-## To Do
+## To Do  
 - Deep Dive ServletWebServerApplicationContext
