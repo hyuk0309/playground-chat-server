@@ -35,6 +35,8 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.5")
 
+    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     // for front-end dependency
